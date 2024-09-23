@@ -1,6 +1,9 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {TaskEditComponent} from './task-edit.component';
+import {provideRouter} from "@angular/router";
+import {provideHttpClient} from "@angular/common/http";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 describe('TaskEditComponent', () => {
   let component: TaskEditComponent;
@@ -8,7 +11,8 @@ describe('TaskEditComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TaskEditComponent]
+      imports: [TaskEditComponent, BrowserAnimationsModule],
+      providers: [provideRouter([]), provideHttpClient()],
     })
       .compileComponents();
 

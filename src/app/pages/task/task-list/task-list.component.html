@@ -1,3 +1,11 @@
+<mat-form-field>
+  <mat-label>Filter by Task Status</mat-label>
+  <mat-select [(ngModel)]="selectedStatus" (selectionChange)="filterTasksByStatus()">
+    <mat-option [value]="undefined"></mat-option>
+    <mat-option [value]="false">ToDo</mat-option>
+    <mat-option [value]="true">Completed</mat-option>
+  </mat-select>
+</mat-form-field>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
   <ng-container matColumnDef="id">
@@ -18,12 +26,11 @@
   <ng-container matColumnDef="completed">
     <th mat-header-cell *matHeaderCellDef> Status</th>
     <td mat-cell *matCellDef="let task">
-      <ng-template [ngIf]="task.completed" [ngIfElse]="todo">
+      @if (task.completed) {
         <mat-icon>done</mat-icon>
-      </ng-template>
-      <ng-template #todo>
+      } @else {
         <mat-icon>play_circle_outline</mat-icon>
-      </ng-template>
+      }
     </td>
   </ng-container>
 
@@ -32,9 +39,9 @@
     <td mat-cell *matCellDef="let task">
       <div class="row">
         <button mat-raised-button color="primary" (click)="editTask(task)">Edit</button>
-        <div *ngIf="!task.completed">
+        @if (!task.completed) {
           <button mat-raised-button color="warn" (click)="finishTask(task)">Complete</button>
-        </div>
+        }
       </div>
     </td>
   </ng-container>

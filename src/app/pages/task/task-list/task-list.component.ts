@@ -15,15 +15,19 @@ import {
 import {Task} from '../../../shared/model/task';
 import {MatButton} from "@angular/material/button";
 import {TaskService} from "../../../shared/services/task.service";
-import {NgIf} from "@angular/common";
 import {MatIcon} from "@angular/material/icon";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Router} from "@angular/router";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatInput} from "@angular/material/input";
+import {MatOption, MatSelect} from "@angular/material/select";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-task-list',
   standalone: true,
   imports: [
+    MatLabel,
     MatTable,
     MatHeaderRow,
     MatRow,
@@ -35,8 +39,12 @@ import {Router} from "@angular/router";
     MatHeaderRowDef,
     MatRowDef,
     MatButton,
-    NgIf,
-    MatIcon
+    MatIcon,
+    MatFormField,
+    MatInput,
+    MatSelect,
+    MatOption,
+    FormsModule,
   ],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css'
@@ -46,6 +54,7 @@ export class TaskListComponent implements OnInit {
 
   public displayedColumns = ['id', 'label', 'description', 'completed', 'action'];
   public dataSource: MatTableDataSource<Task> = new MatTableDataSource<Task>();
+  public selectedStatus?: boolean = undefined;
 
   constructor(private router: Router,
               private snackBar: MatSnackBar) {
@@ -53,6 +62,14 @@ export class TaskListComponent implements OnInit {
 
   ngOnInit(): void {
     this._taskService.getTasks()
+      .subscribe({
+        next: data => this.dataSource.data = data,
+        error: error => this.snackBar.open(error.message),
+      });
+  }
+
+  public filterTasksByStatus() {
+    this._taskService.getTasks(this.selectedStatus)
       .subscribe({
         next: data => this.dataSource.data = data,
         error: error => this.snackBar.open(error.message),

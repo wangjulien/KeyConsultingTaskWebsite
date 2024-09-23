@@ -1,6 +1,9 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {TaskListComponent} from './task-list.component';
+import {provideRouter} from "@angular/router";
+import {provideHttpClient} from "@angular/common/http";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 describe('TaskListComponent', () => {
   let component: TaskListComponent;
@@ -8,7 +11,8 @@ describe('TaskListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TaskListComponent]
+      imports: [TaskListComponent, BrowserAnimationsModule],
+      providers: [provideRouter([]), provideHttpClient()],
     })
       .compileComponents();
 
