@@ -1,0 +1,17 @@
+<div>
+  <form [formGroup]="form" (ngSubmit)="createTask()">
+    <mat-form-field>
+      <mat-label>ID</mat-label>
+      <input matInput formControlName="id" type="text" [disabled]="true">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Label of Task</mat-label>
+      <input matInput placeholder="Label of Task" required formControlName="label" type="text">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <input matInput placeholder="Descriptionk" required formControlName="description" type="text">
+    </mat-form-field>
+    <button mat-stroked-button color="primary" [disabled]="!form.valid || !form.dirty" type="submit">Save</button>
+  </form>
+</div>
